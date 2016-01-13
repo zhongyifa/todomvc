@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <script src="scripts/angular-1.2.13.js"></script>
+  <script src="scripts/todoCtrl.js"></script>
+  <link rel="stylesheet" href="styles/comm.css" type="text/css">
+  <meta charset="utf-8">
+</head>
+
+<body class="body-css" ng-controller="ToDoList" ng-app="main">
+  <header class="header-css">
+    <form ng-submit="addList()">
+      <input class="newtodo-css" ng-model="newToDo" placeholder="What needs to be done?" />
+    </form>
+    <input class="listcheckbox-css" ng-model="allCheck" ng-change="allChange()" type="checkbox" />
+  </header>
+
+  <div class="list-css" ng-model="btnState" ng-repeat="listText in list track by $index" ng-if="judgeListState($index)">
+    <input class="checkbox-css" ng-model="list[$index].state" type="checkbox" />
+    <div ng-dblclick="inputBoxes.showInput($index)">
+      <label class="listfont-css">{{listText.text}}</label>
+      <button class="dellistbtn-css" ng-click="deleteList($index)">X</button>
+      <br>
+    </div>
+    <form ng-model="formShow[$index]" ng-show="formShow[$index]" ng-submit="lists.hideInput($index)">
+      <input class="hiddeninput-css" ng-model="inputBoxes.inputBox[$index]" ng-focus="inputBoxes.showInput($index)" ng-blur="inputBoxes.hideInput($index)" focus-me="focusme"/>
+    </form>
+  </div>
+
+  <footer class="listfooter-css" ng-model="listFooter" ng-show="listFooter">
+    <label style="display: inline;float: left;">{{calculateRemark()}} items left</label>
+    <ul style="display: inline; float: none; position: relative; margin: auto;">
+      <li style="display: inline"><button ng-click="showAll()">All</button></li>
+      <li style="display: inline"><button ng-click="showActive()">Active</button></li>
+      <li style="display: inline"><button ng-click="showCompleted()">Completed</button></li>
+    </ul>
+    <button style="display: inline;float: right;" ng-click="clearCompleted()">Clear completed</button>
+  </footer>
+
+</body>
+
+</html>
